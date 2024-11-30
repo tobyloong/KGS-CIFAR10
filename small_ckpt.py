@@ -158,10 +158,10 @@ def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period, l
         scheduler.step()
         if epoch%10==9:
             if ckpt_pre is not None:
-                checkpoint_path_new = f'{ckpt_pre}_epoch_{global_epoch + 1}'
+                checkpoint_path_new = f'{ckpt_pre}_epoch_{global_epoch}'
                 print(checkpoint_path_new)
                 torch.save({
-                    'epoch': epoch,
+                    'epoch': global_epoch,
                     'model_state_dict': net.state_dict(),
                     'optimizer_state_dict': trainer.state_dict()
                 }, checkpoint_path_new)
@@ -185,7 +185,7 @@ print(devices)  # 打印devices
 lr_period, lr_decay, net = 4, 0.99, get_net()
 preds =  []
 train(net, train_valid_iter, None, num_epochs, lr, wd, devices, lr_period,
-      lr_decay,ckpt_old="../ckpt/small_epoch_30",ckpt_pre="../ckpt/small")
+      lr_decay,ckpt_old="../ckpt/small/small_epoch_60",ckpt_pre="../ckpt/small/small")
 
 for X, _ in test_iter:
     y_hat = net(X.to(devices[0]))
